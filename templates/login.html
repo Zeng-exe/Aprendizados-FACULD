@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- ABAJUR -->
+
+    <div class="lamp-container" id="lampContainer">
+
+        <div class="lamp" onclick="ligarSistema()">
+
+            <div class="lamp-light"></div>
+            <div class="lamp-shade"></div>
+            <div class="lamp-bulb"></div>
+            <div class="lamp-neck"></div>
+            <div class="lamp-base"></div>
+
+        </div>
+
+        <p id="connection-status">
+            ● Sistema desligado
+        </p>
+
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <div class="container" id="loginContainer">
+
+        <div class="login-box">
+
+            <h1>Bem-vindo</h1>
+
+            <p class="subtitulo">
+                Entre na sua conta
+            </p>
+
+            <form method="POST">
+
+                <div class="campo">
+
+                    <label>Usuário</label>
+
+                    <input
+                        type="text"
+                        name="usuario"
+                        placeholder="Digite seu usuário"
+                        required
+                    >
+
+                </div>
+
+                <div class="campo">
+
+                    <label>Senha</label>
+
+                    <input
+                        type="password"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required
+                    >
+
+                </div>
+
+                <button type="submit">
+                    Entrar
+                </button>
+
+            </form>
+
+            {% if mensagem %}
+
+                <p class="mensagem">
+                    {{ mensagem }}
+                </p>
+
+            {% endif %}
+
+            <div class="cadastro">
+
+                <p>Não possui uma conta?</p>
+
+                <a href="/cadastro">
+                    Criar uma conta
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        function ligarSistema() {
+
+            const lamp = document.getElementById("lampContainer");
+            const status = document.getElementById("connection-status");
+            const login = document.getElementById("loginContainer");
+
+            const estaLigado = lamp.classList.contains("ligado");
+
+            if (estaLigado) {
+
+                // DESLIGAR
+
+                lamp.classList.remove("ligado");
+
+                login.classList.remove("mostrar");
+
+                status.innerText = "● Sistema desligado";
+
+            } else {
+
+                // LIGAR
+
+                lamp.classList.add("ligado");
+
+                status.innerText = "Conectando...";
+
+                setTimeout(function() {
+
+                    if (lamp.classList.contains("ligado")) {
+
+                        login.classList.add("mostrar");
+
+                    }
+
+                }, 1000);
+
+                setTimeout(function() {
+
+                    if (lamp.classList.contains("ligado")) {
+
+                        status.innerText = "● Sistema conectado";
+
+                    }
+
+                }, 1800);
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
